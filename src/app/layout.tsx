@@ -1,8 +1,12 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Khula } from "next/font/google"
 import "./globals.css"
+import Header from "@/components/header"
 
-const inter = Inter({ subsets: ["latin"] })
+const khula = Khula({
+  weight: ["300", "400", "600", "700", "800"],
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
   title: "Next Solution - A solução para se gerenciar",
@@ -15,8 +19,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={inter.className}>{children}</body>
+    <html lang="pt-br" className="bg-slate-100">
+      <body className={khula.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   )
 }
