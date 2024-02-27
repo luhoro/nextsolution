@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-br" className="bg-slate-100">
+    <html lang="pt-br">
       <body className={khula.className}>
         <Header />
         {children}

@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { FiUser, FiLogIn, FiLogOut } from "react-icons/fi"
+import { FiUser, FiLogOut } from "react-icons/fi"
 
 const Header = () => {
   return (
-    <header className="flex justify-center px-4 py-6 bg-slate-200 shadow-xl">
+    <header className="flex justify-center px-4 py-6 bg-purple-50  border-b">
       <div className="w-full flex items-center justify-between max-w-7xl">
         <Link href="/">
           <h1 className="font-bold text-2xl hover:tracking-widest duration-200">
