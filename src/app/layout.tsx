@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Khula } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/header"
+import { AuthProvider } from "@/providers/auth"
 
 const khula = Khula({
   weight: ["300", "400", "600", "700", "800"],
@@ -21,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={khula.className}>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
