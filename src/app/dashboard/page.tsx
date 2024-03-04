@@ -1,10 +1,18 @@
 import Container from "@/components/container"
-import React from "react"
+import { getServerSession } from "next-auth"
+import { authOptions } from '@/lib/auth'
+import { redirect } from "next/navigation"
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const session = await getServerSession(authOptions) 
+
+  if (!session || !session.user) {
+    redirect("/")
+  }
+
   return (
     <Container>
-      <h1>aaaa</h1>
+      <h1>Next Solution</h1>
     </Container>
   )
 }
