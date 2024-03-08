@@ -13,11 +13,11 @@ const Ticket = () => {
         </td>
 
         <td className="table-cell">
-          <button className="hover:scale-125 duration-200">
+          <button className="hover:-translate-y-1 duration-200">
             <FiTrash2 fill="#F0D6D6" size={24} />
           </button>
 
-          <button className="hover:scale-125 duration-200 ml-2">
+          <button className="hover:-translate-y-1 duration-200 ml-2">
             <FiFile fill="#D6E0F1" size={24} />
           </button>
         </td>

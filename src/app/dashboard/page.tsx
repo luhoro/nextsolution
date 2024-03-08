@@ -19,7 +19,7 @@ const Dashboard = async () => {
           <h1 className="text-3xl font-bold">Tickets</h1>
           <Link
             href="/dashboard/new"
-            className="px-2 py-1 rounded-md border bg-purple-50 hover:bg-purple-100 font-bold duration-200"
+            className="px-3 py-2  rounded-md border bg-purple-50 hover:bg-purple-100 font-bold duration-200"
           >
             Abrir ticket
           </Link>
