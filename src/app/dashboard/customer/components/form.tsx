@@ -23,7 +23,7 @@ const schema = z.object({
       message: "O número de telefone deve estar (DD) 9 9999-9999",
     }
   ),
-  adress: z.string(),
+  address: z.string(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -88,15 +88,15 @@ const Form = () => {
       </section>
 
       <div>
-        <label className="mb-1 text-lg" htmlFor="adress">
+        <label className="mb-1 text-lg" htmlFor="d">
           Endereço
         </label>
 
         <Input
           type="text"
-          name="adress"
+          name="address"
           placeholder="Digita o endereço"
-          error={errors.adress?.message}
+          error={errors.address?.message}
           register={register}
         />
       </div>
