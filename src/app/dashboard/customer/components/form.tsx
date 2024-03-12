@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Input from "@/components/input"
+import api from "@/lib/api"
+import { useRouter } from "next/navigation"
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatório"),
@@ -28,7 +30,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-const Form = () => {
+const Form = ({ userId }: { userId: string }) => {
   const {
     register,
     handleSubmit,
@@ -37,12 +39,25 @@ const Form = () => {
     resolver: zodResolver(schema),
   })
 
-  const handleRegisterCustomer = (data: FormData) => {
-    console.log(data)
+  const router = useRouter()
+
+  const handleRegisterCustomer = async (data: FormData) => {
+    await api.post("/api/customer", {
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
+      userId,
+    })
+
+    router.replace('/dashboard/customer')
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleRegisterCustomer)}>
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit(handleRegisterCustomer)}
+    >
       <div>
         <label className="mb-1 text-lg" htmlFor="name">
           Nome completo

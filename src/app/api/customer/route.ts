@@ -28,7 +28,4 @@ export const POST = async (request: Request) => {
     return NextResponse.json({ error: "Failed create new customer" }, { status: 400 })
   }
 
-
 }
-
-export default POST

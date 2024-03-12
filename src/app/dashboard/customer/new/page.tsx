@@ -28,7 +28,7 @@ const NewCustomer = async () => {
           <h1 className="text-3xl font-bold">Novo cliente</h1>
         </div>
 
-        <Form />
+        <Form userId={session.user.id}/>
       </main>
     </Container>
   )
