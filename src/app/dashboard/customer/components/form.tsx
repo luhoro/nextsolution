@@ -51,6 +51,7 @@ const Form = ({ userId }: { userId: string }) => {
     })
 
     router.replace('/dashboard/customer')
+    router.refresh()
   }
 
   return (
