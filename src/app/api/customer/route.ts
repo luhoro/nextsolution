@@ -39,10 +39,16 @@ export const DELETE = async (request: Request) => {
 
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get("id")
-
   if (!userId) {
-    return NextResponse.json({ error: "Fail delete customer" }, { status: 401 })
+    return NextResponse.json({ error: "Failed delete customer" }, { status: 401 })
   }
+
+  const findTickets = await prismaClient.ticket.findFirst({
+    where: {
+      customerId: userId
+    }
+  })
+  findTickets ? NextResponse.json({ error: "Failed delete customer" }, { status: 401 }) : ""
 
   try {
     await prismaClient.customer.delete({
@@ -54,6 +60,6 @@ export const DELETE = async (request: Request) => {
 
   } catch (error) {
     console.log(error)
-    return NextResponse.json({ error: "Fail delete customer" }, { status: 401 })
+    return NextResponse.json({ error: "Failed delete customer" }, { status: 401 })
   }
 }
