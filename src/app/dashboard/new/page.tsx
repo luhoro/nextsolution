@@ -3,7 +3,23 @@ import Link from "next/link"
 import React from "react"
 import { FaArrowLeft } from "react-icons/fa"
 
-const NewTicket = () => {
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { redirect } from "next/navigation"
+import prismaClient from "@/lib/prisma"
+
+const NewTicket = async () => {
+  const session = await getServerSession(authOptions)
+  if (!session || !session.user) {
+    redirect("/")
+  }
+
+  const customers = await prismaClient.customer.findMany({
+    where: {
+      userId: session.user.id,
+    },
+  })
+
   return (
     <Container>
       <main>
@@ -50,11 +66,39 @@ const NewTicket = () => {
               Selecione o cliente
             </label>
 
-            <select name="client" className="w-full border rounded-md p-2">
-              <option value="cliente1">Cliente 1</option>
-              <option value="cliente2">Cliente 2</option>
-            </select>
+            {customers.length !== 0 && (
+              <select name="client" className="w-full border rounded-md p-2">
+                {customers.map(customer => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.name}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            {customers.length === 0 && (
+              <div className="w-full border rounded-md p-2">
+                <p className="text-gray-500">
+                  Você não possui um cliente cadastrado! Acesse{" "}
+                  <Link
+                    className="text-purpleMain underline hover:text-black"
+                    href="/dashboard/customer/new"
+                  >
+                    aqui
+                  </Link>{" "}
+                  para cadastrar.
+                </p>
+              </div>
+            )}
           </div>
+
+          <button
+            type="submit"
+            className="font-bold bg-purple-100 rounded-md mt-4 py-2 px-24 sm:self-center hover:bg-purple-200 duration-200 disabled:opacity-60 hover:disabled:bg-purple-100 disabled:cursor-not-allowed"
+            disabled={customers.length === 0 ? true : false}
+          >
+            Cadastrar
+          </button>
         </form>
       </main>
     </Container>
