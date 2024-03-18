@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import prismaClient from "@/lib/prisma"
 
+//Formulário criado como um server component
 const NewTicket = async () => {
   const session = await getServerSession(authOptions)
   if (!session || !session.user) {
@@ -19,6 +20,30 @@ const NewTicket = async () => {
       userId: session.user.id,
     },
   })
+
+  const handleRegisterTicket = async (formData: FormData) => {
+    "use server"
+    
+    const name = formData.get("name")
+    const description = formData.get("description")
+    const customerID = formData.get("customer")
+
+    if (!name || !description || !customerID) {
+      return
+    }
+
+    await prismaClient.ticket.create({
+      data: {
+        name: name as string,
+        description: description as string,
+        customerId: customerID as string,
+        status: "ABERTO",
+        userId: session.user.id
+      }
+    })
+    
+    redirect("/dashboard")
+  }
 
   return (
     <Container>
@@ -34,7 +59,7 @@ const NewTicket = async () => {
           <h1 className="text-3xl font-bold">Novo ticket</h1>
         </div>
 
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" action={handleRegisterTicket}>
           <div>
             <label htmlFor="name" className="mb-1 text-lg">
               Nome do ticket
@@ -62,12 +87,12 @@ const NewTicket = async () => {
           </div>
 
           <div>
-            <label htmlFor="client" className="mb-1 text-lg">
+            <label htmlFor="customer" className="mb-1 text-lg">
               Selecione o cliente
             </label>
 
             {customers.length !== 0 && (
-              <select name="client" className="w-full border rounded-md p-2">
+              <select name="customer" className="w-full border rounded-md p-2">
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>
                     {customer.name}
