@@ -1,15 +1,29 @@
+import CustomerProps from "@/utils/customer.type"
+import { TicketProps } from "@/utils/ticket.type"
 import { FiTrash2, FiFile } from "react-icons/fi"
 
-const Ticket = () => {
+interface TicketCardProps {
+  ticket: TicketProps
+  customer: CustomerProps | null
+}
+
+const Ticket = ({ customer, ticket }: TicketCardProps) => {
   return (
     <>
       <tr className="h-14 border-b last:border-b-0 hover:bg-gray-50 duration-200">
-        <td>Fulano da Silva</td>
+        <td>{customer?.name}</td>
 
-        <td className="hidden sm:table-cell">07/09/1998</td>
+        <td className="hidden sm:table-cell">
+          {ticket.created_at?.toLocaleDateString("pt-br")}
+        </td>
 
         <td>
-          <span className="px-2 py-1 bg-green-100 rounded-md"> Aberto </span>
+            <span className={`px-2 py-1 rounded-md 
+              ${ticket.status === "ABERTO" ? "bg-green-100" : "bg-red-100"}`
+            }>
+              {ticket.status}
+            </span>
+
         </td>
 
         <td className="table-cell">
