@@ -48,10 +48,20 @@ const Dashboard = async () => {
 
           <tbody>
             {tickets.map(ticket => (
-              <Ticket key={ticket.id} customer={ticket.customer} ticket={ticket}/>
+              <Ticket
+                key={ticket.id}
+                customer={ticket.customer}
+                ticket={ticket}
+              />
             ))}
           </tbody>
         </table>
+
+        {tickets.length === 0 && (
+          <h2 className="text-lg mt-8 bg-gray-100 p-4 text-gray-700">
+            Nenhum ticket aberto foi encontrado!
+          </h2>
+        )}
       </main>
     </Container>
   )

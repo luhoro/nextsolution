@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header className="flex justify-center bg-purple-50  border-b">
-      <div className="w-full flex items-center justify-between max-w-7xl px-5 py-6">
+      <div className="w-full flex items-center justify-between max-w-6xl px-5 py-6">
         <Link href="/">
           <h1 className="font-bold text-2xl hover:tracking-widest duration-200">
             <span className="font-medium font-jua text-purpleMain">Next</span>{" "}
