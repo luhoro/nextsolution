@@ -1,6 +1,6 @@
 "use client"
 import CustomerProps from "@/utils/customer.type"
-import { TicketProps } from "@/utils/ticket.type"
+import TicketProps from "@/utils/ticket.type"
 import { FiCheckCircle, FiFile } from "react-icons/fi"
 import {api} from '@/lib/api'
 import { useRouter } from "next/navigation"

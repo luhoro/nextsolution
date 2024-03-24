@@ -3,6 +3,7 @@ import { Khula } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/header"
 import { AuthProvider } from "@/providers/auth"
+import { ModalProvider } from "@/providers/modal"
 
 const khula = Khula({
   weight: ["300", "400", "600", "700", "800"],
@@ -23,8 +24,10 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={khula.className}>
         <AuthProvider>
-          <Header />
-          {children}
+          <ModalProvider>
+            <Header />
+            {children}
+          </ModalProvider>
         </AuthProvider>
       </body>
     </html>
