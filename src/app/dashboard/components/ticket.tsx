@@ -5,6 +5,9 @@ import { FiCheckCircle, FiFile } from "react-icons/fi"
 import {api} from '@/lib/api'
 import { useRouter } from "next/navigation"
 
+import { useContext } from "react"
+import { ModalContext } from "@/providers/modal"
+
 interface TicketCardProps {
   ticket: TicketProps
   customer: CustomerProps | null
@@ -12,6 +15,7 @@ interface TicketCardProps {
 
 const Ticket = ({ customer, ticket }: TicketCardProps) => {
   const router = useRouter()
+  const {handleModalVisible, setDetailTicket} = useContext(ModalContext)
 
   const handleChangeStatus = async () => {
     try {
@@ -24,6 +28,14 @@ const Ticket = ({ customer, ticket }: TicketCardProps) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleOpenModal = () => {
+    handleModalVisible()
+    setDetailTicket({
+      customer: customer,
+      ticket: ticket
+    })
   }
 
   return (
@@ -49,7 +61,7 @@ const Ticket = ({ customer, ticket }: TicketCardProps) => {
             <FiCheckCircle fill="#D6E7F1" size={24} />
           </button>
 
-          <button className="hover:-translate-y-1 duration-200 ml-2">
+          <button onClick={handleOpenModal} className="hover:-translate-y-1 duration-200 ml-2">
             <FiFile fill="#F1E2D6" size={24} />
           </button>
         </td>
