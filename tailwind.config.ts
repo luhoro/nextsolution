@@ -20,6 +20,9 @@ const config: Config = {
         'purpleMain': '#763ad8',
         'purpleDark': '#5A1BC0',
         'purpleLight': '#A384D5',
+      },
+      boxShadow: {
+        'thin': '0 0 20px rgba(0, 0, 0, 0.2)',
       }
     },
   },
