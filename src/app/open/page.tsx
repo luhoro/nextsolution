@@ -5,6 +5,8 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { FiSearch } from "react-icons/fi"
+import { FaRegTimesCircle } from "react-icons/fa"
+import FormTicket from "./components/formTicket"
 
 const schema = z.object({
   email: z
@@ -32,17 +34,30 @@ const OpenTicket = () => {
     resolver: zodResolver(schema),
   })
 
+  const handleClearCustomer = () => {
+    setCustomer(null)
+    setValue("email", "")
+  }
+
   return (
-    <div className="mt-24 mb-8 max-w-2xl mx-auto px-8 py-11 bg-gray-10 rounded-xl shadow-thin">
-      <h1 className="font-bold text-3xl text-center mb-8">Abrit ticket</h1>
+    <main className="mt-24 mb-8 max-w-2xl mx-auto px-8 py-11 bg-gray-10 rounded-xl shadow-thin">
+      <h1 className="font-bold text-3xl text-center mb-8">Abrir ticket</h1>
 
-      {
-        customer? (
-          <div>
+      {customer ? (
+        <div className="flex items-center justify-between gap-6 border p-2 rounded-md bg-gray-50">
+          <p className="text-lg">
+            <strong>Cliente selecionado:</strong> {customer.name}
+          </p>
 
-          </div>
-        ) : (
-          <form className="flex flex-col gap-6">
+          <button
+            onClick={handleClearCustomer}
+            className="hover:-translate-y-1 duration-200"
+          >
+            <FaRegTimesCircle size={24} color="#763ad8" />
+          </button>
+        </div>
+      ) : (
+        <form className="flex flex-col gap-6">
           <Input
             name="email"
             placeholder="Digite o e-mail do cliente..."
@@ -50,15 +65,19 @@ const OpenTicket = () => {
             error={errors.email?.message}
             register={register}
           />
-  
-          <button className="w-full flex gap-4 items-center justify-center font-bold bg-purple-100 rounded-md py-3 sm:self-center hover:bg-purple-200 duration-200">
+
+          <button
+            type="submit"
+            className="w-full flex gap-4 items-center justify-center font-bold bg-purple-100 rounded-md py-3 sm:self-center hover:bg-purple-200 duration-200"
+          >
             Procurar cliente
             <FiSearch size={24} />
           </button>
         </form>
-        )
-      }
-    </div>
+      )}
+
+      {customer !== null && <FormTicket />}
+    </main>
   )
 }
 
