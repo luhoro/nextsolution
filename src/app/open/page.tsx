@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { FiSearch } from "react-icons/fi"
 import { FaRegTimesCircle } from "react-icons/fa"
 import FormTicket from "./components/formTicket"
+import api from "@/lib/api"
 
 const schema = z.object({
   email: z
@@ -30,6 +31,7 @@ const OpenTicket = () => {
     handleSubmit,
     setValue,
     formState: { errors },
+    setError,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
@@ -37,6 +39,27 @@ const OpenTicket = () => {
   const handleClearCustomer = () => {
     setCustomer(null)
     setValue("email", "")
+  }
+
+  const handleSearchCustomer = async (data: FormData) => {
+    const response = await api.get("/api/customer", {
+      params: {
+        email: data.email,
+      },
+    })
+
+    if (response.data === null) {
+      setError("email", {
+        type: "custom",
+        message: "Ops, o cliente não foi encontrado!",
+      })
+      return
+    }
+
+    setCustomer({
+      id: response.data.id,
+      name: response.data.name,
+    })
   }
 
   return (
@@ -57,7 +80,10 @@ const OpenTicket = () => {
           </button>
         </div>
       ) : (
-        <form className="flex flex-col gap-6">
+        <form
+          className="flex flex-col gap-6"
+          onSubmit={handleSubmit(handleSearchCustomer)}
+        >
           <Input
             name="email"
             placeholder="Digite o e-mail do cliente..."

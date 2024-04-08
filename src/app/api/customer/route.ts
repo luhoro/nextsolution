@@ -40,15 +40,20 @@ export const DELETE = async (request: Request) => {
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get("id")
   if (!userId) {
-    return NextResponse.json({ error: "Failed delete customer" }, { status: 401 })
+    return NextResponse.json(
+      { error: "Failed delete customer" },
+      { status: 401 }
+    )
   }
 
   const findTickets = await prismaClient.ticket.findFirst({
     where: {
-      customerId: userId
-    }
+      customerId: userId,
+    },
   })
-  findTickets ? NextResponse.json({ error: "Failed delete customer" }, { status: 401 }) : ""
+  findTickets
+    ? NextResponse.json({ error: "Failed delete customer" }, { status: 401 })
+    : ""
 
   try {
     await prismaClient.customer.delete({
@@ -57,9 +62,35 @@ export const DELETE = async (request: Request) => {
       },
     })
     return NextResponse.json({ message: "Sucess delete customer" })
-
   } catch (error) {
     console.log(error)
-    return NextResponse.json({ error: "Failed delete customer" }, { status: 401 })
+    return NextResponse.json(
+      { error: "Failed delete customer" },
+      { status: 401 }
+    )
   }
+}
+
+export const GET = async (request: Request) => {
+  const { searchParams } = new URL(request.url)
+  const customerEmail = searchParams.get("email")
+
+  if ( !customerEmail || customerEmail === "") {
+    return NextResponse.json({error: "Customer not found"}, {status: 400})
+  }
+
+  try {
+    const customer = await prismaClient.customer.findFirst({
+      where: {
+        email: customerEmail
+      }
+    })
+
+    return NextResponse.json(customer)
+
+  } catch (error) {
+    return NextResponse.json({error: "Customer not found"}, {status: 400})
+  }
+
+  return NextResponse.json({message: "Recieved"})
 }
