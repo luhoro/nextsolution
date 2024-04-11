@@ -91,6 +91,4 @@ export const GET = async (request: Request) => {
   } catch (error) {
     return NextResponse.json({error: "Customer not found"}, {status: 400})
   }
-
-  return NextResponse.json({message: "Recieved"})
 }

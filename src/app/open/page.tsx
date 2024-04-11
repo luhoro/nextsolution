@@ -12,13 +12,13 @@ import api from "@/lib/api"
 const schema = z.object({
   email: z
     .string()
-    .email("Digite o e-mail do cliente para lozalizar")
+    .email("Digite o e-mail do cliente para localizar")
     .min(1, "O campo e-mail é obrigatório!"),
 })
 
 type FormData = z.infer<typeof schema>
 
-interface CustomerDataInfo {
+export interface CustomerDataInfo {
   id: string
   name: string
 }
@@ -102,7 +102,7 @@ const OpenTicket = () => {
         </form>
       )}
 
-      {customer !== null && <FormTicket />}
+      {customer !== null && <FormTicket customer={customer}/>}
     </main>
   )
 }
