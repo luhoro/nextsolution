@@ -63,7 +63,7 @@ const OpenTicket = () => {
   }
 
   return (
-    <main className="mt-24 mb-8 max-w-2xl mx-auto px-8 py-11 bg-gray-10 rounded-xl shadow-thin">
+    <main className="mt-24 mb-8 max-w-2xl mx-5 md:mx-auto px-5 py-11 bg-gray-10 rounded-xl shadow-thin">
       <h1 className="font-bold text-3xl text-center mb-8">Abrir ticket</h1>
 
       {customer ? (
